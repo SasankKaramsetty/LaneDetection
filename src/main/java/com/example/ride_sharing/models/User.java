@@ -26,9 +26,6 @@ public class User {
         return isTraveler;
     }
 
-    public void setTraveler(boolean traveler) {
-        isTraveler = traveler;
-    }
 
     public String getPhoneNo() {
         return phoneNo;

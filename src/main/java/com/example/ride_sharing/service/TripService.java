@@ -1,6 +1,5 @@
 package com.example.ride_sharing.service;
 
-import com.example.ride_sharing.TripRequest;
 import com.example.ride_sharing.models.Trip;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +11,11 @@ import java.util.Random;
 public class TripService {
 
     @Autowired
-    private UserService userService; // Inject UserService for user operations
 
     // This should be replaced with an actual TripRepository for database interaction
-    private TripRepository tripRepository;
+    private com.example.ride_sharing.TripRepository tripRepository;
 
-    public Trip createTrip(TripRequest tripRequest) {
-        // Generate trip ID, OTP, and set up the Trip object
+    public Trip createTrip(Trip tripRequest) {
         Trip newTrip = new Trip();
         newTrip.setUsername(tripRequest.getUsername());
         newTrip.setDriverName("Raj Yadav");

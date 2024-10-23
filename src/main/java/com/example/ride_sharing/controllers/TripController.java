@@ -1,53 +1,43 @@
 package com.example.ride_sharing.controllers;
-
 import com.example.ride_sharing.Response;
+import com.example.ride_sharing.models.TravelerCompanion;
 import com.example.ride_sharing.TripRequest;
+import com.example.ride_sharing.models.User;
 import com.example.ride_sharing.service.TripService;
-import com.example.ride_sharing.service.UserService;
 import com.example.ride_sharing.models.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*; // Make sure to import RestController, RequestMapping, PostMapping, and RequestBody
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-        import java.util.List;
+import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/api/trips")
 public class TripController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private TripService tripService;
 
     @PostMapping("/createTrip")
-    public ResponseEntity<?> createTrip(@RequestBody TripRequest tripRequest) {
-        try {
-            User user = userService.findByUsername(tripRequest.getUsername());
-            if (user.isTraveler()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("You already have an ongoing trip", false, null));
-            }
-
-            List<String> companions = tripRequest.getTravelerCompanions();
-            for (String companionUsername : companions) {
-                User companion = userService.findByUsername(companionUsername);
-                if (companion == null) {
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("Travel companion " + companionUsername + " doesn't exist.", false, null));
-                }
-            }
-
-            // Create a new trip using the tripService
-            Trip newTrip = tripService.createTrip(tripRequest);
-
-            // Logic for sending messages using Twilio or another messaging service can be added here
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Trip created successfully", true, newTrip.getId()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Internal Server Error", false, null));
-        }
+    public ResponseEntity<?> createRandomTrip(@RequestBody TripRequest tripRequest) {
+        // Hardcode trip details
+        Trip newTrip = new Trip();
+        newTrip.setUsername(tripRequest.getUsername());
+        newTrip.setDriverName(tripRequest.getDriverName());
+        newTrip.setDriverPhoneNumber(tripRequest.getDriverPhoneNumber());
+        newTrip.setCabNumber(tripRequest.getCabNumber());
+        newTrip.setTravelerCompanions(tripRequest.getTravelerCompanions());
+        newTrip.setStatus(tripRequest.getStatus());
+        newTrip.setTripOTP(tripRequest.getTripOTP());
+        newTrip.setSourceLatitude(tripRequest.getSourceLatitude());
+        newTrip.setSourceLongitude(tripRequest.getSourceLongitude());
+        newTrip.setDestinationLatitude(tripRequest.getDestinationLatitude());
+        newTrip.setDestinationLongitude(tripRequest.getDestinationLongitude());
+        newTrip.setCurrentLatitude(tripRequest.getSourceLatitude());
+        newTrip.setCurrentLongitude(tripRequest.getSourceLongitude());
+        Trip savedTrip = tripService.createTrip(newTrip); // Use a service method to save the trip
+        return ResponseEntity.ok(savedTrip); // Return the saved trip as the response
     }
+
 }

@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RideSharingApplication {
 	public static void main(String[] args) {
 		 SpringApplication.run(RideSharingApplication.class, args);
-		System.out.println("nfrw");
+		System.out.println("server started!!");
 	}
 }
