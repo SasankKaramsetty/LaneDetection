@@ -1,10 +1,12 @@
 package com.example.ride_sharing.models;
 
+import com.example.ride_sharing.Feedback;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -28,6 +30,6 @@ public class Trip {
     private double destinationLongitude;
     private double currentLatitude;
     private double currentLongitude;
-
-    // You can add constructors if necessary
+    @OneToMany(cascade = CascadeType.ALL) // Cascade operations and orphan removal
+    private List<Feedback> feedbacks = new ArrayList<>();
 }
