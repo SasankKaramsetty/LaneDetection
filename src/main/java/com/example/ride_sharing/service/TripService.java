@@ -38,5 +38,8 @@ public class TripService {
         return tripRepository.save(trip);
 //        return trip;
     }
+    public List<Trip> findAllTrips() {
+        return tripRepository.findAll(); // Ensure your TripRepository has this method
+    }
 }
 
