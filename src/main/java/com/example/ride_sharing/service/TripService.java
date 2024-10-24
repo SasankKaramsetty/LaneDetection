@@ -25,9 +25,9 @@ public class TripService {
         return trip;
     }
 
-    private String generateOTP() {
-        return String.valueOf(100000 + new Random().nextInt(900000)); // Generate a 6-digit OTP
-    }
+//    private String generateOTP() {
+//        return String.valueOf(100000 + new Random().nextInt(900000)); // Generate a 6-digit OTP
+//    }
     public Optional<Trip> findById(Long id) {
         return tripRepository.findById(id);
     }
@@ -64,4 +64,3 @@ public class TripService {
         return tripRepository.save(trip);
     }
 }
-

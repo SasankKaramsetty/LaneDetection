@@ -29,7 +29,7 @@ public class TripController {
 
     @PostMapping("/createTrip")
     public ResponseEntity<?> createRandomTrip(@RequestBody TripRequest tripRequest) {
-        System.out.println(tripRequest);
+//        System.out.println(tripRequest);
         Trip newTrip = new Trip();
         newTrip.setUsername(tripRequest.getUsername());
         newTrip.setDriverName(tripRequest.getDriverName());
