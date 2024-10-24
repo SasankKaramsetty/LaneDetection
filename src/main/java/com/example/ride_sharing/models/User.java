@@ -1,4 +1,5 @@
 package com.example.ride_sharing.models;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class User {
         return isTraveler;
     }
 
+    public void setTraveler(boolean isTraveler) {
+        this.isTraveler = isTraveler;
+    }
 
     public String getPhoneNo() {
         return phoneNo;
@@ -49,5 +53,16 @@ public class User {
 
     public void setTravelerCompanionFor(List<String> travelerCompanionFor) {
         this.travelerCompanionFor = travelerCompanionFor;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", isTraveler=" + isTraveler +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", isTravelerCompanion=" + isTravelerCompanion +
+                ", travelerCompanionFor=" + travelerCompanionFor +
+                '}';
     }
 }

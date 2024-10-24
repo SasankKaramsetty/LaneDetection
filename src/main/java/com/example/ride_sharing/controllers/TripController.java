@@ -3,6 +3,7 @@ import com.example.ride_sharing.Feedback;
 import com.example.ride_sharing.Response;
 import com.example.ride_sharing.models.TravelerCompanion;
 import com.example.ride_sharing.TripRequest;
+import com.example.ride_sharing.models.UpdateCoordinatesRequest;
 import com.example.ride_sharing.models.User;
 import com.example.ride_sharing.service.TripService;
 import com.example.ride_sharing.models.Trip;
@@ -138,4 +139,23 @@ public class TripController {
         }
     }
 
+    @PutMapping("/update-coordinates")
+    public ResponseEntity<?> updateLiveCoordinates(@RequestBody UpdateCoordinatesRequest request) {
+        try {
+            Trip updatedTrip = tripService.updateLiveCoordinates(
+                    request.getUsername(),
+                    request.getCurrentLatitude(),
+                    request.getCurrentLongitude()
+            );
+
+            return ResponseEntity.ok(new Response(
+                    "Coordinates updated successfully", true, updatedTrip
+            ));
+        } catch (Exception e) {
+            logger.error("Error updating coordinates: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new Response("Failed to update coordinates: " + e.getMessage(), false, null)
+            );
+        }
+    }
 }

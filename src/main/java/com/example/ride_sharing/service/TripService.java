@@ -41,5 +41,27 @@ public class TripService {
     public List<Trip> findAllTrips() {
         return tripRepository.findAll(); // Ensure your TripRepository has this method
     }
+    public Trip updateLiveCoordinates(String username, double currentLatitude, double currentLongitude) throws Exception {
+        // Find the active trip for the given user
+        List<Trip> trips = tripRepository.findByUsername(username);
+
+        if (trips.isEmpty()) {
+            throw new Exception("No active trips found for user: " + username);
+        }
+
+        // Assuming only one active trip per user, get the first one
+        Trip trip = trips.get(0);
+
+        if ("completed".equals(trip.getStatus())) {
+            throw new Exception("Cannot update coordinates. The trip is already completed.");
+        }
+
+        // Update the current coordinates
+        trip.setCurrentLatitude(currentLatitude);
+        trip.setCurrentLongitude(currentLongitude);
+
+        // Save the updated trip
+        return tripRepository.save(trip);
+    }
 }
 
