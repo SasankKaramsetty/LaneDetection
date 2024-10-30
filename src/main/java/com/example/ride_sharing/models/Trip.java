@@ -21,9 +21,12 @@ public class Trip {
     private String driverName;
     private String driverPhoneNumber;
     private String cabNumber;
-    private List<String> travelerCompanions;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Cascade operations and orphan removal
+//    private List<TravelerCompanion> travelerCompanions = new ArrayList<>();
+    private List<String>travelerCompanions = new ArrayList<>();
     private String status;
     private String tripOTP;
+    private boolean linkActive = true;
     private double sourceLatitude;
     private double sourceLongitude;
     private double destinationLatitude;
